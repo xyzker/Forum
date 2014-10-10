@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+	<constant name="struts.devMode" value="true" />
+ 	<constant name="struts.i18n.encoding" value="gbk"></constant>
+ 	<constant name="struts.ui.theme" value="simple"></constant>
+ 	<constant name="struts.custom.i18n.resources" value="global"></constant>
+ 	<constant name="struts.multipart.maxSize" value="10000000"></constant><!-- 最大上传表单10M -->
+ 	
+ 	<package name="forum" extends="struts-default">
+ 	
+ 		<interceptors>
+ 			<interceptor name="login" class="forum.interceptor.LoginInterceptor"></interceptor>
+ 			<interceptor-stack name="loginStack">
+ 				<interceptor-ref name="login"></interceptor-ref>
+ 				<interceptor-ref name="defaultStack"></interceptor-ref>
+ 			</interceptor-stack>
+ 			<interceptor-stack name="uploadStack">
+ 				<interceptor-ref name="fileUpload">
+ 					<param name="allowedTypes">image/jpeg</param>
+ 					<param name="maximumSize">2000000</param>
+ 				</interceptor-ref>
+ 				<interceptor-ref name="defaultStack"></interceptor-ref>
+ 			</interceptor-stack>
+ 		</interceptors>
+ 		<!-- 
+ 		<default-interceptor-ref name="loginStack"></default-interceptor-ref>
+ 		 -->
+ 	
+ 		<global-results>
+ 			<result name="login" type="chain">
+ 				<param name="actionName">init-login</param>
+ 				<param name="namespace">/person</param>
+ 			</result>
+ 		</global-results>
+ 	
+ 		<action name="index">
+ 			<result name="success" type="redirectAction">
+ 				<param name="actionName">list</param>
+ 				<param name="namespace">/category</param>
+ 			</result>
+ 		</action>
+ 		
+ 	</package>
+ 	
+ 	<package name="upload" extends="json-default">
+ 		
+ 		<action name="uploadImage" class="forum.action.upload.UploadImageAction" method="uploadImage">
+            <result type="json">
+                <param name="noCache">true</param>
+                <param name="contentType">text/html</param>
+                <param name="root">jsonMap</param>		<!-- 转换为json对象传给客户端 -->
+            </result>
+        </action>
+    </package>
+</struts>

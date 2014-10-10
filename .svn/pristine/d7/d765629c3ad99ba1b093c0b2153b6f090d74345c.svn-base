@@ -1,0 +1,137 @@
+<%@ page language="java" contentType="text/html; charset=gbk"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<jsp:include flush="true" page="/forum/header.jsp"></jsp:include>
+
+<!-- TinyMCE -->
+<script type="text/javascript" src="<%=basePath %>tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+	tinyMCE.init({
+		 selector: "textarea",
+    theme: "modern",
+    plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern"
+    ],
+    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    toolbar2: "print preview media | forecolor backcolor emoticons",
+    image_advtab: true,
+    templates: [
+        {title: 'Test template 1', content: 'Test 1'},
+        {title: 'Test template 2', content: 'Test 2'}
+    ]
+	});
+</script>
+
+<script type="text/javascript">
+<!--
+	function check(){
+		var val = document.getElementById("theme").value;
+		if(val == null || val.trim() == ""){
+			document.getElementById("msg").innerHTML="主题不能为空！";
+			return false;
+		}
+		else{
+			document.getElementById("msg").innerHTML="";
+			return true;
+		}
+}
+	
+	String.prototype.trim = function() {
+    	return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  	}
+
+//-->
+</script>
+
+<div id="main">
+
+	<div class="t3">
+		<table cellspacing="0" cellpadding="0" width="100%" align="center">
+			<tr>
+				<td style="padding-top: 12px;text-align: left;">
+					<img src="<%=basePath %>images/yellow/index/home.gif" align="absbottom" />
+					<b> <a
+						href="">${
+							board.category.name }</a> &raquo; <a
+						href="">${
+							board.name }</a>
+				</td>
+			</tr>
+		</table>
+		<br />
+	</div>
+
+	<div class="t3">
+		<table width="100%" align="center" cellspacing="0" cellpadding="0">
+			<tr>
+				<td align="left">
+					<div class="fl">
+						<div class="pages">
+							${ pagination }
+						</div>
+					</div>
+				</td>
+				<td align="right" style="padding-bottom:.2em">
+					<a
+						href=""><img
+							src="<%=basePath %>images/yellow/reply.png" /> </a>
+					<a
+						href="<s:url action='init-add' namespace='/thread'/>?board.id=${ board.id }"
+						style="margin-left:.5em"><img src="<%=basePath %>images/yellow/post.png"
+							id="td_post" /> </a>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<s:form action="add" namespace="/thread" onsubmit="return check();">
+		<s:hidden name="board.id" value="%{board.id}"/>
+		<!-- Thread Start -->
+		<div class="t" style="margin-bottom:0px; border-bottom:0">
+			<table cellspacing="0" cellpadding="0" width="100%">
+				<tr>
+					<th class="h">
+						<strong class="fl w"><b>发表帖子</b> &nbsp;
+						<span style="color: red; font-weight: bold;" id="msg"></span>
+						</strong>
+					</th>
+				</tr>
+			</table>
+		</div>
+
+		<div class="t t2">
+			<table cellspacing="0" cellpadding="0" width="100%"
+				style="table-layout:fixed;border-top:0">
+				<tr class="tr1">
+					<th style="width:20%" class="r_two" style="text-align: right">
+						主题
+					</th>
+					<th height="100%" class="r_one" valign="top" id="td_4900235"
+						style="padding:5px 15px 0 15px; border:0;width:80%; overflow:hidden">
+						<s:textfield name="thread.title" cssStyle="width: 500px; " id="theme" 
+						 onblur="check()"></s:textfield>
+					</th>
+				</tr>
+				<tr class="tr1 r_one">
+					<th style="width:20%" class="r_two" style="text-align: right">
+						内容
+					</th>
+					<th style="vertical-align:bottom;padding-left:15px;border:0">
+						<s:textarea name="thread.content"
+							cssStyle="width: 500px; height: 200px; " ></s:textarea>
+						<br />
+						<br />
+						<s:submit value="提交" cssClass="btn"></s:submit>
+					</th>
+				</tr>
+			</table>
+		</div>
+	</s:form>
+
+	<jsp:include flush="true" page="/forum/footer.jsp" />

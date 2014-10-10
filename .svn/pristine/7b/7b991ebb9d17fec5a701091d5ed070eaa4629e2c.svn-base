@@ -1,0 +1,7 @@
+package forum.service;
+
+import forum.model.Reply;
+
+public interface IReplyService<T extends Reply> extends IService<T> {
+
+}

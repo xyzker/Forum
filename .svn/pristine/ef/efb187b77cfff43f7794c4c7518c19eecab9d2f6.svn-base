@@ -1,0 +1,66 @@
+package forum.model;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Reply extends BaseBean	{
+	@ManyToOne
+	@JoinColumn(name="thread_id")
+	private Thread thread;
+	
+	private String title;	//回复的标题
+	
+	@Basic(fetch =	FetchType.LAZY)
+	@Column(columnDefinition = "longtext")			//给列为longtext类型
+	private String content;		//回复的内容
+	
+	@ManyToOne
+	@JoinColumn(name="author_id")
+	private Person author;	
+	
+	private int floor;		//第几楼
+	private String ipCreated;		//发表时的IP地址
+	public Thread getThread() {
+		return thread;
+	}
+	public void setThread(Thread thread) {
+		this.thread = thread;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Person getAuthor() {
+		return author;
+	}
+	public void setAuthor(Person author) {
+		this.author = author;
+	}
+	public int getFloor() {
+		return floor;
+	}
+	public void setFloor(int floor) {
+		this.floor = floor;
+	}
+	public String getIpCreated() {
+		return ipCreated;
+	}
+	public void setIpCreated(String ipCreated) {
+		this.ipCreated = ipCreated;
+	}
+	
+	
+}

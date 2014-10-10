@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="forum" location="0,0" size="0,0">
+    <action name="index" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="addAvatar" location="0,0" size="0,0">
+      <result name="input" />
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="addAvatar-success.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="index.jsp" path="/index.jsp" location="1220,325" size="150,55" />
+  <webResource name="HelloWorld.jsp" path="/HelloWorld.jsp" location="1212,500" size="150,55" />
+  <webResource name="thankyou.jsp" path="/thankyou.jsp" location="239,500" size="150,55" />
+  <webResource name="register.jsp" path="/register.jsp" location="730,10" size="150,55" />
+  <webResource name="edit_success.jsp" path="/edit_success.jsp" location="230,290" size="150,55" />
+  <webResource name="edit.jsp" path="/edit.jsp" location="65,185" size="150,55" />
+  <webResource name="viewPerson.jsp" path="/WEB-INF/content/person/viewPerson.jsp" location="0,0" size="0,0" />
+  <webResource name="addAvatar-success.jsp" path="/WEB-INF/content/person/addAvatar-success.jsp" location="0,0" size="0,0" />
+</Struts2Diagram>
+
